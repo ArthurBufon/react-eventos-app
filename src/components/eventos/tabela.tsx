@@ -8,6 +8,9 @@ interface TabelaProps {
 }
 
 export default function Tabela(props: TabelaProps) {
+
+  const showActions = props.eventoSelecionado || props.eventoExcluido
+
   /**
    * Renderiza linhas do header.
    */
@@ -36,7 +39,7 @@ export default function Tabela(props: TabelaProps) {
           <td className="text-left p-3">{evento.data}</td>
           <td className="text-left p-3">{evento.descricao}</td>
           <td className="text-left p-3">{evento.status}</td>
-          <td className="text-center p-3">{renderActions(evento)}</td>
+          {showActions ? renderActions(evento) : false}
         </tr>
       );
     });
@@ -45,19 +48,31 @@ export default function Tabela(props: TabelaProps) {
   /**
    * Redenriza Ações
    */
-  function renderActions(evento: Evento){
+  function renderActions(evento: Evento) {
     return (
-      <td className="flex">
-        <button onClick={() => props.eventoSelecionado?.(evento)} className="flex justify-center items-center text-indigo-400 rounded-full p-2 m-1 hover:bg-gray-100">{IconeEdicao}</button>
-        <button onClick={() => props.eventoExcluido?.(evento)} className="flex justify-center items-center text-red-500 rounded-full p-2 m-1 hover:bg-gray-100">{IconeLixo}</button>
+      <td className="flex justify-center">
+        {/* <button onClick={() => props.eventoSelecionado?.(evento)} className="flex justify-center items-center text-indigo-400 rounded-full p-2 m-1 hover:bg-gray-100">{IconeEdicao}</button> */}
+
+        {props.eventoSelecionado
+          ? (<button onClick={() => props.eventoSelecionado?.(evento)} className="flex justify-center items-center text-indigo-400 rounded-full p-2 m-1 hover:bg-gray-100">{IconeEdicao}</button>)
+          : false}
+        {props.eventoExcluido
+          ? (<button onClick={() => props.eventoExcluido?.(evento)} className="flex justify-center items-center text-red-500 rounded-full p-2 m-1 hover:bg-gray-100">{IconeLixo}</button>)
+          : false}
       </td>
     );
   }
 
   return (
     <table className="w-full rounded-xl overflow-hidden">
-      <thead className="text-gray-700 bg-gray-300">{renderHeader()}</thead>
-      <tbody>{renderBody()}</tbody>
+
+      <thead className="text-gray-700 bg-gray-300">
+        {renderHeader()}
+      </thead>
+
+      <tbody>
+        {renderBody()}
+      </tbody>
     </table>
   );
 }
