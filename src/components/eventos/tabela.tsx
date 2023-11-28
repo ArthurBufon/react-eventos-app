@@ -1,4 +1,4 @@
-import Evento from "../core/Evento";
+import Evento from "@/app/core/Evento";
 import { IconeEdicao, IconeLixo } from "../icones/tabela";
 
 interface TabelaProps {

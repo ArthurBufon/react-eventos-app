@@ -1,3 +1,5 @@
+import { formatDate } from "../utils/converters";
+
 export default class Evento {
   id: number | null;
   nome: string;
@@ -35,5 +37,9 @@ export default class Evento {
         "PREVISTO"
       ),
     ];
+  }
+
+  static vazio(): Evento {
+    return new Evento(null, "", formatDate(""), "", "");
   }
 }
